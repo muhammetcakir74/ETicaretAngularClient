@@ -1,0 +1,22 @@
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+ 
+            <div class="form-group">
+              <label for="username">Kullanıcı Adı & Email</label>
+              <input #txtUsernameOrEmail type="text" class="form-control" id="username" placeholder="Kullanıcı Adı & Email" >
+              <small class="form-text text-muted" >Lütfen boş bırakmayınız</small>
+            </div>
+            
+            <div class="form-group">
+              <label for="password">Şifre</label>
+              <input #txtPassword type="password"  class="form-control" id="password" placeholder="Şifre">
+            </div>
+                <asl-google-signin-button></asl-google-signin-button>
+                <img src="../../../../assets/facebook.png" width="30px" style="cursor: pointer;" (click)="facebookLogin()" />
+            <br>
+            <button type="submit" class="btn btn-primary" (click)="login(txtUsernameOrEmail.value,txtPassword.value)">Giriş Yap</button>
+
+    </div>
+    <div class="col-md-2"></div>
+</div>

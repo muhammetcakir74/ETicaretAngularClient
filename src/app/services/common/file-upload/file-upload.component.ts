@@ -2,6 +2,8 @@ import { HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Component, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { NgxFileDropEntry } from 'ngx-file-drop';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { SpinnerType } from 'src/app/base/base.component';
 import { FileUploadDialogComponent, FileUploadDialogState } from 'src/app/dialogs/file-upload-dialog/file-upload-dialog.component';
 import { AlertifyService, MessageType, Position } from '../../admin/alertify.service';
 import { CustomToastrService, ToastrMessageType, ToastrPosition } from '../../ui/custom-toastr.service';
@@ -19,7 +21,9 @@ export class FileUploadComponent {
     private httpClientService:HttpClientService,
     private aletify:AlertifyService,
     private customToastrService:CustomToastrService,
-    private dialogService:DialogService) {}
+    private dialogService:DialogService,
+    private spinner:NgxSpinnerService
+    ) {}
 
   public files: NgxFileDropEntry[];
 
@@ -50,7 +54,7 @@ export class FileUploadComponent {
       componentType: FileUploadDialogComponent,
       data: FileUploadDialogState.Yes,
       afterClosed: () => {
-
+        this.spinner.show(SpinnerType.LineScale);
         this.httpClientService.post({
           controller:this.options.controller,
           action:this.options.action,
@@ -59,7 +63,7 @@ export class FileUploadComponent {
         },fileData).subscribe(data => {
     
           const message: string = "Dosyalar başarıyla yüklenmiştir"
-    
+          this.spinner.hide(SpinnerType.LineScale);
           if(this.options.isAdminPage) {
             this.aletify.message(message,{
               dismissOthers: true,
@@ -72,10 +76,11 @@ export class FileUploadComponent {
               position:ToastrPosition.TopRight
             })
           }
+          
     
         }, (errorResponse:HttpErrorResponse) => {
           const message: string = "Dosyalar yüklenirken beklenmeyen bir hatayla karşılaşılmıştır."
-    
+          this.spinner.hide(SpinnerType.LineScale);
           if(this.options.isAdminPage) {
             this.aletify.message(message,{
               dismissOthers: true,
