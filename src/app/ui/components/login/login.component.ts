@@ -21,7 +21,7 @@ export class LoginComponent extends BaseComponent implements OnInit {
   ) {
     super(spinner);
     socialAuthService.authState.subscribe(async (user: SocialUser) => {
-      console.log(user);
+      //console.log(user);
       this.showSpinner(SpinnerType.BallSpinClockwiseFadeRotating);
       switch (user.provider) {
         case "GOOGLE":
