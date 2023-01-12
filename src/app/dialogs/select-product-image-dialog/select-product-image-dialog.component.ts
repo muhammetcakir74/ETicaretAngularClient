@@ -63,6 +63,13 @@ export class SelectProductImageDialogComponent  extends BaseDialog<SelectProduct
     queryString: `id=${this.data}`
   };
 
+  showCase(imageId:string){
+    this.spinner.show(SpinnerType.LineScale);
+    this.productService.changeShowcaseImage(imageId,this.data as string, () => {
+      this.spinner.hide(SpinnerType.LineScale);
+    })
+  }
+
   
 
 }
